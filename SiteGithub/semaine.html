@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- Installation sur l'écran d'accueil et mode hors ligne -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1C3F73">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icone-apple-180.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Le carnet">
+  <title>Plan de la semaine</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="bandeau">
+    <div class="bandeau-interieur">
+      <a class="marque" href="index.html">
+        <span class="marque-nom">Le carnet</span>
+        <span class="marque-sous">cuisine maison</span>
+      </a>
+      <nav class="onglets">
+        <a href="index.html" class="onglet">Consulter</a>
+        <a href="semaine.html" class="onglet actif" aria-current="page">Plan semaine</a>
+        <a href="ajouter.html" class="onglet">Ajouter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <div class="entete-plan">
+      <h1 class="titre-page">Plan de la semaine</h1>
+
+      <div class="commandes">
+        <label class="champ-inline">
+          <span>À table</span>
+          <input type="number" id="taille-foyer" min="1" max="12" value="2">
+          <span>pers.</span>
+        </label>
+        <button type="button" id="bouton-composer" class="bouton">Composer la semaine</button>
+        <button type="button" id="bouton-courses" class="bouton bouton-sobre">Liste de courses</button>
+        <button type="button" id="bouton-vider" class="bouton bouton-sobre">Tout vider</button>
+      </div>
+    </div>
+
+    <p class="encadre-texte">
+      Une recette prévue pour plus de personnes qu'il n'y a à table remplit
+      les repas suivants — c'est le reste du plat de la veille.
+      Clique sur un repas pour choisir toi-même la recette.
+    </p>
+
+    <div class="cadre-tableau">
+      <table class="tableau-semaine">
+        <thead>
+          <tr>
+            <th scope="col" class="colonne-jour">Jour</th>
+            <th scope="col">Midi</th>
+            <th scope="col">Soir</th>
+          </tr>
+        </thead>
+        <!-- Les lignes sont construites par semaine.js -->
+        <tbody id="corps-semaine"></tbody>
+      </table>
+    </div>
+
+    <div id="avertissement-vide" class="etat-vide" hidden>
+      <p class="etat-vide-titre">Rien à planifier</p>
+      <p class="etat-vide-texte">Le carnet doit contenir des recettes avant de composer une semaine.</p>
+      <a href="ajouter.html" class="bouton">Ajouter une recette</a>
+    </div>
+
+  </main>
+
+  <!-- ============ SÉLECTEUR DE RECETTE ============ -->
+  <!-- <dialog> gère seul l'arrière-plan, la touche Échap et le focus. -->
+  <dialog id="selecteur" class="selecteur">
+    <div class="selecteur-entete">
+      <div>
+        <p class="selecteur-surtitre">Choisir une recette</p>
+        <h2 class="selecteur-titre" id="selecteur-titre">Lundi soir</h2>
+      </div>
+      <button type="button" id="selecteur-fermer" class="selecteur-fermer"
+              aria-label="Fermer">&times;</button>
+    </div>
+
+    <input type="search" id="selecteur-recherche" class="selecteur-recherche"
+           placeholder="Rechercher dans le carnet…" autocomplete="off">
+
+    <label class="bascule selecteur-bascule">
+      <input type="checkbox" id="selecteur-toutes">
+      <span>Afficher aussi les recettes hors contraintes</span>
+    </label>
+
+    <div id="selecteur-resultats" class="selecteur-resultats"></div>
+  </dialog>
+
+  <!-- ============ LISTE DE COURSES ============ -->
+  <dialog id="courses" class="selecteur">
+    <div class="selecteur-entete">
+      <div>
+        <p class="selecteur-surtitre">Pour la semaine</p>
+        <h2 class="selecteur-titre">Liste de courses</h2>
+      </div>
+      <button type="button" id="courses-fermer" class="selecteur-fermer"
+              aria-label="Fermer">&times;</button>
+    </div>
+
+    <div id="courses-contenu" class="courses-contenu"></div>
+
+    <div class="courses-pied">
+      <button type="button" id="courses-copier" class="bouton bouton-sobre">
+        Copier la liste
+      </button>
+      <span id="courses-etat" class="courses-etat"></span>
+    </div>
+  </dialog>
+
+  <script src="stockage.js"></script>
+  <script src="semaine.js"></script>
+  <script src="pwa.js"></script>
+</body>
+</html>

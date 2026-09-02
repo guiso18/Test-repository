@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- Installation sur l'écran d'accueil et mode hors ligne -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1C3F73">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icone-apple-180.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Le carnet">
+  <title>Ajouter une recette</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="bandeau">
+    <div class="bandeau-interieur">
+      <a class="marque" href="index.html">
+        <span class="marque-nom">Le carnet</span>
+        <span class="marque-sous">cuisine maison</span>
+      </a>
+      <nav class="onglets">
+        <a href="index.html" class="onglet">Consulter</a>
+        <a href="semaine.html" class="onglet">Plan semaine</a>
+        <a href="ajouter.html" class="onglet actif" aria-current="page">Ajouter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page page-etroite">
+
+    <!-- Le texte de ce titre est remplacé par ajouter.js en mode modification -->
+    <h1 class="titre-page" id="titre-page">Nouvelle recette</h1>
+
+    <!-- Message de confirmation, masqué tant qu'on n'a rien ajouté -->
+    <p id="confirmation" class="confirmation" hidden></p>
+
+    <form id="formulaire-recette" class="formulaire">
+
+      <div class="champ champ-large">
+        <label for="nom">Nom de la recette</label>
+        <input type="text" id="nom" required autocomplete="off"
+               placeholder="Gratin de courgettes">
+      </div>
+
+      <div class="champ">
+        <label for="type">Type</label>
+        <select id="type" required>
+          <option value="Invités">Invités</option>
+          <option value="Express">Express</option>
+          <option value="Rapide">Rapide</option>
+        </select>
+      </div>
+
+      <div class="champ">
+        <label for="personnes">Nombre de personnes</label>
+        <input type="number" id="personnes" min="1" max="30" value="4" required>
+      </div>
+
+      <fieldset class="champ champ-large groupe-cases">
+        <legend>Contraintes</legend>
+        <label class="bascule">
+          <input type="checkbox" id="vegetarien">
+          <span>Végétarien</span>
+        </label>
+        <label class="bascule">
+          <input type="checkbox" id="transportable">
+          <span>Transportable</span>
+        </label>
+      </fieldset>
+
+      <div class="champ champ-large">
+        <label id="etiquette-ingredients">Ingrédients</label>
+        <span class="aide">Quantité et unité facultatives — laisse vide pour « 3 courgettes ».</span>
+
+        <!-- Les lignes sont créées par ajouter.js -->
+        <div class="lignes" id="lignes-ingredients" role="group"
+             aria-labelledby="etiquette-ingredients"></div>
+
+        <button type="button" id="ajouter-ligne" class="bouton bouton-sobre bouton-mini">
+          Ajouter un ingrédient
+        </button>
+      </div>
+
+      <div class="champ champ-large barre-actions">
+        <button type="submit" class="bouton" id="bouton-envoi">Enregistrer la recette</button>
+        <a href="index.html" class="lien-retour" id="lien-retour">Retour au carnet</a>
+      </div>
+
+    </form>
+
+    <!-- ============ SAUVEGARDE ============ -->
+    <section class="encadre" id="encadre-sauvegarde">
+      <h2>Sauvegarde</h2>
+      <p class="encadre-texte">
+        Les recettes sont enregistrées dans ce navigateur uniquement.
+        Un nettoyage du cache les effacerait. Exporte-les de temps en temps.
+      </p>
+      <div class="barre-actions">
+        <button type="button" id="bouton-export" class="bouton bouton-sobre">
+          Exporter en fichier
+        </button>
+        <label class="bouton bouton-sobre">
+          Importer un fichier
+          <input type="file" id="champ-import" accept=".json" hidden>
+        </label>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="stockage.js"></script>
+  <script src="ajouter.js"></script>
+  <script src="pwa.js"></script>
+</body>
+</html>

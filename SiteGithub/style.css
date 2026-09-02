@@ -1,0 +1,1160 @@
+/* =========================================================
+   STYLE — commun aux deux pages.
+
+   Direction visuelle : l'émail de cuisine. Le bleu cobalt
+   profond des cocottes émaillées, le laiton des casseroles,
+   sur un papier crème. Chaque type de recette a sa couleur
+   de tranche, comme un onglet de classeur.
+   ========================================================= */
+
+:root {
+  /* --- Palette --- */
+  --cobalt:      #1C3F73;
+  --cobalt-fonce:#152F57;
+  --cobalt-pale: #E7ECF4;
+  --laiton:      #A0742C;
+  --prune:       #6B3A5B;
+  --sauge:       #43704E;
+  --canard:      #1B6B70;   /* contrainte « transportable » */
+  --papier:      #F7F4EE;
+  --carte:       #FFFFFF;
+  --encre:       #1B1E24;
+  --encre-douce: #6E7480;
+  --trait:       #E2DDD2;
+
+  /* --- Typographie --- */
+  /* Deux polices déjà présentes sur ta machine : rien à télécharger,
+     le site marche donc aussi hors ligne sur ton téléphone. */
+  --titre: "Iowan Old Style", "Palatino Linotype", Palatino,
+           "Book Antiqua", Georgia, serif;
+  --texte: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --rayon: 3px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: var(--texte);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================================
+   BANDEAU ET NAVIGATION
+   ========================================================= */
+
+.bandeau {
+  background: var(--cobalt);
+  color: #fff;
+  /* Installé sur l'écran d'accueil, le site passe sous la barre
+     d'état et l'encoche. env() récupère la hauteur à laisser libre ;
+     la valeur de repli 0 s'applique partout ailleurs. */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+.bandeau-interieur {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 84px;
+}
+
+.marque {
+  text-decoration: none;
+  color: inherit;
+  padding-bottom: 18px;
+  display: block;
+}
+
+.marque-nom {
+  display: block;
+  font-family: var(--titre);
+  font-size: 27px;
+  line-height: 1.1;
+}
+
+.marque-sous {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.62);
+  margin-top: 3px;
+}
+
+.onglets { display: flex; gap: 4px; }
+
+.onglet {
+  display: block;
+  padding: 12px 20px 15px;
+  color: rgba(255,255,255,0.66);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  border-bottom: 3px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.onglet:hover { color: #fff; }
+
+.onglet.actif {
+  color: #fff;
+  border-bottom-color: var(--laiton);
+}
+
+/* =========================================================
+   MISE EN PAGE
+   ========================================================= */
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 34px 24px 80px;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+}
+
+.page-etroite { max-width: 660px; }
+
+.titre-page {
+  font-family: var(--titre);
+  font-size: 32px;
+  font-weight: 400;
+  margin: 0 0 26px;
+}
+
+/* =========================================================
+   BARRE DE FILTRES
+   ========================================================= */
+
+.barre {
+  border-top: 1px solid var(--trait);
+  border-bottom: 1px solid var(--trait);
+  padding: 4px 0;
+  margin-bottom: 34px;
+}
+
+.barre-ligne {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.barre-ligne + .barre-ligne { border-top: 1px solid var(--trait); }
+
+.intitule {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--encre-douce);
+  width: 92px;
+  flex-shrink: 0;
+}
+
+.puces { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+
+.puce {
+  padding: 6px 15px;
+  border: 1px solid var(--trait);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--encre-douce);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.puce:hover { border-color: var(--cobalt); color: var(--cobalt); }
+
+/* La classe "actif" est posée et retirée par liste.js */
+.puce.actif {
+  background: var(--cobalt);
+  border-color: var(--cobalt);
+  color: #fff;
+}
+
+.bascule {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--encre-douce);
+  cursor: pointer;
+  user-select: none;
+}
+
+.bascule input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--cobalt);
+  cursor: pointer;
+}
+
+.bascule:hover { color: var(--cobalt); }
+
+.decompte {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--encre-douce);
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================
+   GROUPES ET FICHES
+   ========================================================= */
+
+.groupe { margin-bottom: 42px; }
+
+.groupe-titre {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 16px;
+  font-family: var(--titre);
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.groupe-titre::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--trait);
+}
+
+.groupe-nombre {
+  font-family: var(--texte);
+  font-size: 12px;
+  color: var(--encre-douce);
+  font-variant-numeric: tabular-nums;
+}
+
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+  gap: 16px;
+}
+
+/* La fiche. Sa tranche gauche prend la couleur du type :
+   c'est ce qui rend le carnet lisible d'un coup d'oeil. */
+.fiche {
+  --tranche: var(--encre-douce);
+  position: relative;
+  background: var(--carte);
+  border: 1px solid var(--trait);
+  border-left: 4px solid var(--tranche);
+  border-radius: var(--rayon);
+  padding: 20px 20px 18px;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+
+.fiche:hover {
+  box-shadow: 0 6px 18px rgba(27,30,36,0.07);
+  transform: translateY(-2px);
+}
+
+.fiche[data-type="Invités"] { --tranche: var(--laiton); }
+.fiche[data-type="Express"] { --tranche: var(--cobalt); }
+.fiche[data-type="Rapide"]  { --tranche: var(--prune); }
+
+.fiche-type {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tranche);
+  font-weight: 600;
+}
+
+.fiche-nom {
+  margin: 5px 0 10px;
+  font-family: var(--titre);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.fiche-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--trait);
+  font-size: 13px;
+  color: var(--encre-douce);
+}
+
+.jeton {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 2px 9px;
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+.jeton-vege { background: rgba(67,112,78,0.13); color: var(--sauge); }
+.jeton-transport { background: rgba(27,107,112,0.13); color: var(--canard); }
+
+.fiche-ingredients {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14.5px;
+}
+
+/* Deux colonnes : la mesure, puis l'ingrédient.
+   Les quantités s'alignent, la liste se lit comme une vraie fiche. */
+.fiche-ingredients li {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.mesure {
+  color: var(--tranche);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-size: 13.5px;
+  text-align: right;
+  padding-top: 1px;
+}
+
+/* Rangée d'actions au bas de la fiche.
+   margin négatif : elle vient toucher les bords du padding de la fiche. */
+.fiche-actions {
+  display: flex;
+  gap: 4px;
+  margin: 16px -20px -18px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--trait);
+}
+
+.action {
+  border: none;
+  background: none;
+  padding: 4px 10px;
+  border-radius: var(--rayon);
+  font-family: inherit;
+  font-size: 12.5px;
+  letter-spacing: 0.03em;
+  color: var(--encre-douce);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.14s, color 0.14s;
+}
+
+.action:hover { background: var(--cobalt-pale); color: var(--cobalt); }
+
+.action-danger:hover { background: #F7EEED; color: #A3352F; }
+
+/* =========================================================
+   ÉTAT VIDE
+   ========================================================= */
+
+.etat-vide {
+  text-align: center;
+  padding: 64px 20px;
+  border: 1px dashed var(--trait);
+  border-radius: var(--rayon);
+}
+
+.etat-vide-titre {
+  font-family: var(--titre);
+  font-size: 22px;
+  margin: 0 0 4px;
+}
+
+.etat-vide-texte {
+  color: var(--encre-douce);
+  margin: 0 0 22px;
+  font-size: 15px;
+}
+
+/* =========================================================
+   FORMULAIRE
+   ========================================================= */
+
+.formulaire {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.champ-large { grid-column: 1 / -1; }
+
+.champ label,
+.groupe-cases legend {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--encre-douce);
+}
+
+.aide {
+  font-size: 13px;
+  color: var(--encre-douce);
+  margin-top: -3px;
+}
+
+.champ input[type="text"],
+.champ input[type="number"],
+.champ select,
+.champ textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon);
+  background: var(--carte);
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--encre);
+}
+
+.champ textarea {
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.champ input:focus,
+.champ select:focus,
+.champ textarea:focus {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 1px;
+  border-color: var(--cobalt);
+}
+
+.groupe-cases {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.groupe-cases legend { padding: 0; margin-bottom: 4px; }
+
+.barre-actions {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.bouton {
+  display: inline-block;
+  padding: 12px 26px;
+  border: 1px solid var(--cobalt);
+  border-radius: var(--rayon);
+  background: var(--cobalt);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.bouton:hover { background: var(--cobalt-fonce); border-color: var(--cobalt-fonce); }
+
+.bouton-sobre {
+  background: transparent;
+  color: var(--cobalt);
+  border-color: var(--trait);
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.bouton-sobre:hover {
+  background: var(--cobalt-pale);
+  border-color: var(--cobalt);
+}
+
+.lien-retour {
+  color: var(--encre-douce);
+  font-size: 14px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--trait);
+}
+
+.lien-retour:hover { color: var(--cobalt); border-bottom-color: var(--cobalt); }
+
+.confirmation {
+  margin: 0 0 24px;
+  padding: 13px 16px;
+  border-left: 3px solid var(--sauge);
+  background: rgba(67,112,78,0.08);
+  color: var(--sauge);
+  font-size: 14.5px;
+  border-radius: 0 var(--rayon) var(--rayon) 0;
+}
+
+.confirmation a { color: inherit; font-weight: 600; }
+
+/* Même bandeau, ton d'avertissement : recette introuvable. */
+.confirmation-alerte {
+  border-left-color: var(--laiton);
+  background: rgba(160,116,44,0.10);
+  color: #7A5720;
+}
+
+/* =========================================================
+   ENCADRÉ SAUVEGARDE
+   ========================================================= */
+
+.encadre {
+  margin-top: 52px;
+  padding-top: 26px;
+  border-top: 1px solid var(--trait);
+}
+
+.encadre h2 {
+  font-family: var(--titre);
+  font-size: 19px;
+  font-weight: 400;
+  margin: 0 0 6px;
+}
+
+.encadre-texte {
+  font-size: 14px;
+  color: var(--encre-douce);
+  margin: 0 0 18px;
+  max-width: 52ch;
+}
+
+/* =========================================================
+   LIGNES D'INGRÉDIENTS (formulaire)
+   ========================================================= */
+
+.lignes { display: flex; flex-direction: column; gap: 8px; }
+
+.ligne-ingredient {
+  display: grid;
+  grid-template-columns: 82px 148px 1fr 32px;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Ces trois règles doivent gagner sur .champ input plus haut,
+   d'où les sélecteurs plus précis. */
+.ligne-ingredient .ligne-quantite,
+.ligne-ingredient .ligne-unite,
+.ligne-ingredient .ligne-nom {
+  padding: 9px 11px;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon);
+  background: var(--carte);
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--encre);
+  min-width: 0;
+}
+
+.ligne-quantite { text-align: right; font-variant-numeric: tabular-nums; }
+
+.ligne-retirer {
+  border: none;
+  background: none;
+  color: #C7C2B8;
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--rayon);
+  padding: 4px;
+}
+
+.ligne-retirer:hover { color: #A3352F; background: #F7EEED; }
+
+.bouton-mini {
+  align-self: start;
+  margin-top: 4px;
+  padding: 8px 16px;
+  font-size: 13.5px;
+}
+
+/* =========================================================
+   PLAN DE SEMAINE
+   ========================================================= */
+
+.entete-plan {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.entete-plan .titre-page { margin-bottom: 0; }
+
+.commandes { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+
+.champ-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--encre-douce);
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon);
+  padding: 6px 12px;
+  background: var(--carte);
+}
+
+.champ-inline input {
+  width: 46px;
+  padding: 3px 6px;
+  border: 1px solid var(--trait);
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: 14px;
+  text-align: center;
+  color: var(--encre);
+}
+
+/* --- Le tableau --- */
+/* Le cadre porte le trait et les coins : une <table> en
+   border-collapse ne sait pas arrondir les siens. */
+.cadre-tableau {
+  margin-top: 24px;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon);
+  overflow: hidden;
+  background: var(--carte);
+}
+
+.tableau-semaine {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableau-semaine thead th {
+  background: var(--cobalt);
+  color: rgba(255,255,255,0.85);
+  font-family: var(--texte);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 11px 16px;
+}
+
+.tableau-semaine thead .colonne-jour { width: 118px; }
+
+.tableau-semaine tbody tr + tr { border-top: 1px solid var(--trait); }
+
+/* Le week-end se distingue : pas de gamelle à préparer. */
+.ligne-weekend { background: #FAF8F3; }
+
+.cellule-jour {
+  width: 118px;
+  padding: 14px 16px;
+  vertical-align: top;
+  text-align: left;
+  font-family: var(--titre);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--encre);
+  border-right: 1px solid var(--trait);
+  white-space: nowrap;
+}
+
+.cellule-repas {
+  padding: 11px 14px 12px;
+  vertical-align: top;
+  width: 50%;
+}
+
+.cellule-repas + .cellule-repas { border-left: 1px solid var(--trait); }
+
+/* --- Les contraintes du repas --- */
+
+.contraintes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 9px;
+}
+
+/* Inactif : un contour à peine visible, aucune couleur.
+   Actif : rempli de la couleur de sa contrainte. On voit
+   d'un coup d'oeil ce qui est réellement exigé. */
+.mini-puce {
+  border: 1px solid var(--trait);
+  background: transparent;
+  color: #B4B0A7;
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.13s, color 0.13s, border-color 0.13s;
+}
+
+.mini-puce:hover { border-color: var(--encre-douce); color: var(--encre-douce); }
+
+.mini-puce.actif { color: #fff; }
+
+/* Les types reprennent les couleurs de tranche des fiches. */
+.mini-puce.actif[data-filtre="Invités"] { background: var(--laiton); border-color: var(--laiton); }
+.mini-puce.actif[data-filtre="Express"] { background: var(--cobalt); border-color: var(--cobalt); }
+.mini-puce.actif[data-filtre="Rapide"]  { background: var(--prune);  border-color: var(--prune);  }
+.mini-puce.actif[data-filtre="vegetarien"]    { background: var(--sauge);  border-color: var(--sauge);  }
+.mini-puce.actif[data-filtre="transportable"] { background: var(--canard); border-color: var(--canard); }
+
+/* --- Le contenu de la case --- */
+
+.creneau-contenu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-top: 1px solid var(--trait);
+  padding-top: 9px;
+  min-height: 48px;
+}
+
+.creneau-vide {
+  flex: 1;
+  text-align: left;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: #BFBBB2;
+  cursor: pointer;
+  padding: 6px 0;
+}
+
+.creneau-vide:hover { color: var(--cobalt); }
+
+.creneau-recette {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 4px 6px;
+  margin-left: -6px;
+  border-radius: var(--rayon);
+}
+
+.creneau-recette:hover { background: var(--cobalt-pale); }
+
+.creneau-nom {
+  display: block;
+  font-family: var(--titre);
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--encre);
+}
+
+.creneau-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin-top: 3px;
+}
+
+.creneau-type {
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--encre-douce);
+}
+
+.creneau-type[data-type="Invités"] { color: var(--laiton); }
+.creneau-type[data-type="Express"] { color: var(--cobalt); }
+.creneau-type[data-type="Rapide"]  { color: var(--prune); }
+
+.creneau-portions { font-size: 11.5px; color: var(--encre-douce); }
+
+.jeton-alerte {
+  background: rgba(160,116,44,0.14);
+  color: #7A5720;
+  font-size: 10px;
+  padding: 1px 8px;
+}
+
+.creneau-actions { display: flex; gap: 2px; flex-shrink: 0; }
+
+.creneau-action {
+  border: none;
+  background: none;
+  color: var(--encre-douce);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: var(--rayon);
+  cursor: pointer;
+}
+
+.creneau-action:hover { background: var(--cobalt-pale); color: var(--cobalt); }
+
+.creneau-action-vider { font-size: 16px; line-height: 1; padding: 2px 7px; }
+
+.creneau-action-vider:hover { background: #F7EEED; color: #A3352F; }
+
+/* --- Préfixes devant le nom du plat --- */
+
+.prefixe {
+  display: inline-block;
+  margin-right: 5px;
+  font-family: var(--texte);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 1px 6px;
+  border-radius: 3px;
+  vertical-align: 2px;
+}
+
+/* À cuisiner en plusieurs fois : la couleur alerte, sans crier. */
+.prefixe-multiple {
+  background: var(--laiton);
+  color: #fff;
+}
+
+/* Rien à cuisiner ni à acheter : volontairement terne. */
+.prefixe-reste {
+  background: #EDEAE2;
+  color: var(--encre-douce);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+}
+
+/* =========================================================
+   LISTE DE COURSES
+   ========================================================= */
+
+.courses-contenu {
+  overflow-y: auto;
+  max-height: 420px;
+  padding: 18px 20px 6px;
+}
+
+.courses-resume {
+  margin: 0 0 18px;
+  font-size: 13.5px;
+  color: var(--encre-douce);
+}
+
+.courses-bloc + .courses-bloc { margin-top: 24px; }
+
+.courses-titre {
+  margin: 0 0 8px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--cobalt);
+}
+
+.courses-ligne {
+  display: grid;
+  grid-template-columns: 20px 78px 1fr auto;
+  gap: 10px;
+  align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--trait);
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.courses-ligne input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--cobalt);
+  align-self: center;
+  cursor: pointer;
+}
+
+.courses-mesure {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--cobalt);
+}
+
+.courses-note { font-size: 11.5px; color: var(--encre-douce); }
+
+/* Coché : l'article part visuellement au fond du panier. */
+.courses-ligne.coche { opacity: 0.4; }
+.courses-ligne.coche .courses-nom { text-decoration: line-through; }
+
+.courses-pied {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px 18px;
+  border-top: 1px solid var(--trait);
+  background: var(--papier);
+}
+
+.courses-etat { font-size: 13px; color: var(--encre-douce); }
+
+/* =========================================================
+   SÉLECTEUR DE RECETTE
+   ========================================================= */
+
+.selecteur {
+  width: min(520px, calc(100vw - 32px));
+  max-height: min(680px, calc(100vh - 64px));
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  background: var(--papier);
+  color: var(--encre);
+  box-shadow: 0 22px 60px rgba(21,47,87,0.24);
+  overflow: hidden;
+}
+
+.selecteur::backdrop { background: rgba(21,47,87,0.34); }
+
+.selecteur-entete {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 14px;
+  background: var(--cobalt);
+  color: #fff;
+}
+
+.selecteur-surtitre {
+  margin: 0;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+.selecteur-titre {
+  margin: 3px 0 0;
+  font-family: var(--titre);
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.selecteur-fermer {
+  border: none;
+  background: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.selecteur-fermer:hover { color: #fff; }
+
+.selecteur-recherche {
+  display: block;
+  width: calc(100% - 40px);
+  margin: 18px 20px 10px;
+  padding: 10px 13px;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon);
+  background: var(--carte);
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--encre);
+}
+
+.selecteur-recherche:focus {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 1px;
+  border-color: var(--cobalt);
+}
+
+.selecteur-bascule { margin: 0 20px 14px; font-size: 13px; }
+
+.selecteur-resultats {
+  overflow-y: auto;
+  max-height: 360px;
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.proposition {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 11px 13px;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon);
+  background: var(--carte);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.13s, background 0.13s;
+}
+
+.proposition:hover {
+  border-color: var(--cobalt);
+  background: var(--cobalt-pale);
+}
+
+.proposition-nom {
+  display: block;
+  font-family: var(--titre);
+  font-size: 16.5px;
+  color: var(--encre);
+}
+
+.proposition-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.selecteur-rien {
+  color: var(--encre-douce);
+  font-size: 14px;
+  font-style: italic;
+  padding: 14px 0;
+  margin: 0;
+}
+
+/* =========================================================
+   TÉLÉPHONE
+   ========================================================= */
+
+@media (max-width: 620px) {
+  .bandeau-interieur {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 18px 18px 0;
+  }
+
+  .marque { padding-bottom: 14px; }
+  .marque-nom { font-size: 23px; }
+
+  .onglets { border-top: 1px solid rgba(255,255,255,0.16); }
+  .onglet { flex: 1; text-align: center; padding: 13px 0 14px; }
+
+  .page { padding: 24px 18px 60px; }
+  .titre-page { font-size: 26px; }
+
+  .intitule { width: 100%; }
+  .decompte { margin-left: 0; width: 100%; }
+
+  .formulaire { grid-template-columns: 1fr; }
+  .grille { grid-template-columns: 1fr; }
+
+  /* Quantité et unité côte à côte, l'ingrédient sur la ligne du dessous. */
+  .ligne-ingredient {
+    grid-template-columns: 74px 1fr 30px;
+    grid-template-areas:
+      "qte unite retirer"
+      "nom nom   nom";
+    gap: 7px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--trait);
+  }
+
+  .ligne-quantite { grid-area: qte; }
+  .ligne-unite    { grid-area: unite; }
+  .ligne-nom      { grid-area: nom; }
+  .ligne-retirer  { grid-area: retirer; }
+
+  /* Le tableau se déplie : chaque jour devient un bloc,
+     ses deux repas empilés dessous. Les cellules perdent
+     leur comportement de tableau via display: block. */
+  .cadre-tableau { border: none; background: none; overflow: visible; }
+
+  .tableau-semaine thead { display: none; }
+
+  .tableau-semaine,
+  .tableau-semaine tbody,
+  .tableau-semaine tr,
+  .tableau-semaine th,
+  .tableau-semaine td { display: block; width: auto; }
+
+  .tableau-semaine tbody tr + tr { border-top: none; }
+
+  .ligne-weekend { background: none; }
+
+  .cellule-jour {
+    width: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--trait);
+    padding: 18px 0 4px;
+    margin-bottom: 8px;
+  }
+
+  .ligne-weekend .cellule-jour { color: var(--cobalt); }
+
+  .cellule-repas {
+    width: auto;
+    background: var(--carte);
+    border: 1px solid var(--trait);
+    border-radius: var(--rayon);
+    padding: 10px 13px 11px;
+    margin-bottom: 7px;
+  }
+
+  .cellule-repas + .cellule-repas { border-left: 1px solid var(--trait); }
+
+  /* L'étiquette Midi / Soir, portée par l'attribut data-repas,
+     remplace l'en-tête de colonne qu'on vient de masquer. */
+  .cellule-repas::before {
+    content: attr(data-repas);
+    display: block;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--encre-douce);
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+
+  .entete-plan { flex-direction: column; align-items: stretch; }
+  .commandes { justify-content: space-between; }
+  .selecteur-resultats { max-height: 46vh; }
+  .courses-contenu { max-height: 52vh; }
+  .courses-ligne { grid-template-columns: 20px 66px 1fr; }
+  .courses-note { grid-column: 3; }
+}
+
+/* Respecte le réglage système "réduire les animations". */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  .fiche:hover { transform: none; }
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- Installation sur l'écran d'accueil et mode hors ligne -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1C3F73">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icone-apple-180.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Le carnet">
+  <title>Mes recettes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="bandeau">
+    <div class="bandeau-interieur">
+      <a class="marque" href="index.html">
+        <span class="marque-nom">Le carnet</span>
+        <span class="marque-sous">cuisine maison</span>
+      </a>
+      <nav class="onglets">
+        <a href="index.html" class="onglet actif" aria-current="page">Consulter</a>
+        <a href="semaine.html" class="onglet">Plan semaine</a>
+        <a href="ajouter.html" class="onglet">Ajouter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- ============ BARRE DE FILTRES ============ -->
+    <section class="barre" aria-label="Filtrer les recettes">
+      <div class="barre-ligne">
+        <span class="intitule">Type</span>
+        <div class="puces" id="filtres-type">
+          <button type="button" class="puce actif" data-type="tous">Tout</button>
+          <button type="button" class="puce" data-type="Invités">Invités</button>
+          <button type="button" class="puce" data-type="Express">Express</button>
+          <button type="button" class="puce" data-type="Rapide">Rapide</button>
+        </div>
+      </div>
+
+      <div class="barre-ligne">
+        <span class="intitule">Contraintes</span>
+        <div class="puces">
+          <label class="bascule">
+            <input type="checkbox" id="filtre-vegetarien">
+            <span>Végétarien</span>
+          </label>
+          <label class="bascule">
+            <input type="checkbox" id="filtre-transportable">
+            <span>Transportable</span>
+          </label>
+        </div>
+        <span class="decompte" id="decompte"></span>
+      </div>
+    </section>
+
+    <!-- ============ RECETTES ============ -->
+    <!-- Rempli par liste.js. Vide dans le HTML, c'est normal. -->
+    <div id="resultats"></div>
+
+    <div id="etat-vide" class="etat-vide">
+      <p class="etat-vide-titre">Le carnet est vide</p>
+      <p class="etat-vide-texte">Note ta première recette pour commencer.</p>
+      <a href="ajouter.html" class="bouton">Ajouter une recette</a>
+    </div>
+
+  </main>
+
+  <script src="stockage.js"></script>
+  <script src="liste.js"></script>
+  <script src="pwa.js"></script>
+</body>
+</html>
